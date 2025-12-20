@@ -1,0 +1,8 @@
+spring:
+  datasource:
+    hikari:
+      max-lifetime: 250000 #250 sec
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:23306/near_connect?autoReconnect=true
+    username: root
+    password: 102030
