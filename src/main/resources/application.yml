@@ -1,4 +1,7 @@
 spring:
+#    jdbc:
+#      initialize-schema: always
+
   datasource:
     hikari:
       max-lifetime: 250000 #250 sec
@@ -6,3 +9,6 @@ spring:
     url: jdbc:mysql://localhost:23306/near_connect?autoReconnect=true
     username: root
     password: 102030
+  batch:
+    job:
+#      enabled: false # 애플리케이션 시작 시 Batch Job을 자동으로 실행할 것인가?
