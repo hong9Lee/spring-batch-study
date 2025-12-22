@@ -51,8 +51,39 @@
 Job이 구동되면 Step을 실행하고 Step이 구동되면 Tasklet을 실행하도록 설정함.  
 <img width="984" height="286" alt="스크린샷 2025-12-20 오후 2 31 59" src="https://github.com/user-attachments/assets/8fdad271-fdf4-4aa4-ad6e-9339a57fd36d" />
 
+##  
+
+### Job  
+- 배치 계층 구조에서 가장 상위에 있는 개념, 하나의 배치작업 자체를 의미함.
+- Job Configuration을 통해 생성되는 객체 단위로서 배치작업을 어떻게 구성하고 실행할 것인지 전체적으로 설정하고 명세해 놓은 객체.
+- 여러 Step을 포함하고 있는 컨테이너로서 반드시 한개 이상의 Step으로 구성해야함.
+
+#### 기본 구현체 
+- SimpleJob
+  - 순차적으로 Step을 실행시키는 Job
+  - 모든 Job에서 유용하게 사용할 수 있는 표준 기능을 가지고 있음
+- FlowJob
+  - 특정한 조건과 흐름에 따라 Step을 구성하여 실행시키는 Job
+  - Flow 객체를 실행시켜서 작업을 진행함
+ <img width="1253" height="573" alt="스크린샷 2025-12-21 오전 9 20 55" src="https://github.com/user-attachments/assets/606301f8-7da1-46ca-9410-d78eddfceae7" />
 
 
+### JobInstance  
+- Job 이 실행될 때 생성되는 Job 의 논리적 실행 단위 객체로서 고유하게 식별 가능한 작업 실행을 나타냄  
+- Job 의 설정과 구성은 동일하지만 Job 이 실행되는 시점에 처리하는 내용은 다르기 때문에 Job 의 실행을 구분해야 함  
+  - 예를 들어 하루에 한 번 씩 배치 Job이 실행된다면 매일 실행되는 각각의 Job 을 JobInstance 로 표현합니다.  
+- JobInstance 생성 및 실행  
+  - 처음 시작하는 Job + JobParameter 일 경우 새로운 JobInstance 생성  
+  - 이전과 동일한 Job + JobParameter 으로 실행 할 경우 이미 존재하는 JobInstance 리턴  
+    - 내부적으로 JobName + jobKey (jobParametes 의 해시값) 를 가지고 JobInstance 객체를 얻음  
+- Job 과는 1:M 관계  
+- JOB_NAME (Job) 과 JOB_KEY (JobParameter 해시값) 가 동일한 데이터는 중복해서 저장할 수 없음
+
+<img width="843" height="597" alt="스크린샷 2025-12-21 오전 9 48 58" src="https://github.com/user-attachments/assets/64bb75f5-1c60-4767-9e8c-cb5dbf293a90" />  
+
+##   
+  
+<img width="1097" height="581" alt="스크린샷 2025-12-21 오전 9 49 07" src="https://github.com/user-attachments/assets/896fdde9-2d40-43b8-9762-3ff598ea32f4" />
 
 
 
