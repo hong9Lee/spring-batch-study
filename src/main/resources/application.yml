@@ -11,4 +11,4 @@ spring:
     password: 102030
   batch:
     job:
-#      enabled: false # 애플리케이션 시작 시 Batch Job을 자동으로 실행할 것인가?
+      enabled: false # 애플리케이션 시작 시 Batch Job을 자동으로 실행할 것인가?
