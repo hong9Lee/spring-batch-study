@@ -85,13 +85,28 @@ Job이 구동되면 Step을 실행하고 Step이 구동되면 Tasklet을 실행�
   
 <img width="1097" height="581" alt="스크린샷 2025-12-21 오전 9 49 07" src="https://github.com/user-attachments/assets/896fdde9-2d40-43b8-9762-3ff598ea32f4" />
 
+##  
+
+### JobParameter  
+- Job을 실행할 때 함께 포함되어 사용되는 파라미터를 가진 도메인 객체  
+- 하나의 Job에 존재할 수 있는 여러개의 JobInstance를 구분하기 위한 용도  
+- JobParameters와 JobInstance는 1:1 관계  
+
+(생성 및 바인딩)  
+- 어플리케이션 실행 시 주입
+  - Java -jar LogBatch.jar requestDate=20210101
+- 코드로 생성
+  - JobParameterBuilder, DefaultJobParametersConverter
+- SpEL 이용  
+  - @Value(“#{jobParameter[requestDate]}”), @JobScope, @StepScope 선언 필수
 
 
+(BATCH_JOB_EXECUTION_PARAM 테이블과 매핑)  
+- JOB_EXECUTION 과 1:M 의 관계
 
+##  
 
-
-
-
+<img width="1082" height="575" alt="스크린샷 2025-12-22 오후 9 54 00" src="https://github.com/user-attachments/assets/d2f4c20f-4e71-4cf4-aeeb-9ce21a50d424" />
 
 
 
