@@ -21,20 +21,20 @@ public class JobConfiguration {
     private final JobRepository jobRepository;
 
 //    @Bean
-    public Job job() {
-        return new JobBuilder("job", jobRepository)
-                .start(step1())
-                .next(step2())
+    public Job basicJob() {
+        return new JobBuilder("basicJob", jobRepository)
+                .start(basicStep1())
+                .next(basicStep2())
                 .build();
     }
 
 //    @Bean
-    public Step step1() {
-        return new StepBuilder("step1", jobRepository)
+    public Step basicStep1() {
+        return new StepBuilder("basicStep1", jobRepository)
                 .tasklet(new Tasklet() {
                     @Override
                     public @Nullable RepeatStatus execute(StepContribution contribution, ChunkContext chunkContext) throws Exception {
-                        System.out.println("step1 was executed");
+                        System.out.println("basicStep1 was executed");
                         return RepeatStatus.FINISHED;
                     }
                 })
@@ -42,12 +42,12 @@ public class JobConfiguration {
     }
 
 //    @Bean
-    public Step step2() {
-        return new StepBuilder("step2", jobRepository)
+    public Step basicStep2() {
+        return new StepBuilder("basicStep2", jobRepository)
                 .tasklet(new Tasklet() {
                     @Override
                     public @Nullable RepeatStatus execute(StepContribution contribution, ChunkContext chunkContext) throws Exception {
-                        System.out.println("step2 was executed");
+                        System.out.println("basicStep2 was executed");
                         return RepeatStatus.FINISHED;
                     }
                 })

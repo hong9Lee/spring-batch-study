@@ -11,43 +11,40 @@ import org.springframework.batch.core.step.StepContribution;
 import org.springframework.batch.core.step.builder.StepBuilder;
 import org.springframework.batch.core.step.tasklet.Tasklet;
 import org.springframework.batch.infrastructure.repeat.RepeatStatus;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
 @RequiredArgsConstructor
-public class JobInstanceConfiguration {
+public class JobStepConfiguration {
 
     private final JobRepository jobRepository;
 
-    //    @Bean
-    public Job instanceJob() {
-        return new JobBuilder("instanceJob", jobRepository)
-                .start(instanceStep1())
-                .next(instanceStep2())
+    @Bean
+    public Job jobStepJob() {
+        return new JobBuilder("jobStepJob", jobRepository)
+                .start(jobStep1())
+                .next(jobStep2())
                 .build();
     }
 
-    public Step instanceStep1() {
-        return new StepBuilder("instanceStep1", jobRepository)
+    @Bean
+    public Step jobStep1() {
+        return new StepBuilder("jobStep1", jobRepository)
+                .tasklet(new CustomTasklet())
+                .build();
+    }
+
+    @Bean
+    public Step jobStep2() {
+        return new StepBuilder("jobStep2", jobRepository)
                 .tasklet(new Tasklet() {
                     @Override
                     public @Nullable RepeatStatus execute(StepContribution contribution, ChunkContext chunkContext) throws Exception {
+                        System.out.println("jobStep2 was executed");
                         return RepeatStatus.FINISHED;
                     }
                 })
                 .build();
     }
-
-    public Step instanceStep2() {
-        return new StepBuilder("instanceStep2", jobRepository)
-                .tasklet(new Tasklet() {
-                    @Override
-                    public @Nullable RepeatStatus execute(StepContribution contribution, ChunkContext chunkContext) throws Exception {
-                        return RepeatStatus.FINISHED;
-                    }
-                })
-                .build();
-    }
-
-
 }

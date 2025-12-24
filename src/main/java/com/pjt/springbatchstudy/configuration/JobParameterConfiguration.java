@@ -23,17 +23,17 @@ public class JobParameterConfiguration {
 
     private final JobRepository jobRepository;
 
-    @Bean
-    public Job job() {
-        return new JobBuilder("job", jobRepository)
-                .start(step1())
-                .next(step2())
+//    @Bean
+    public Job parameterJob() {
+        return new JobBuilder("parameterJob", jobRepository)
+                .start(parameterStep1())
+                .next(parameterStep2())
                 .build();
     }
 
-    @Bean
-    public Step step1() {
-        return new StepBuilder("step1", jobRepository)
+//    @Bean
+    public Step parameterStep1() {
+        return new StepBuilder("parameterStep1", jobRepository)
                 .tasklet(new Tasklet() {
                     @Override
                     public @Nullable RepeatStatus execute(StepContribution contribution, ChunkContext chunkContext) throws Exception {
@@ -47,20 +47,20 @@ public class JobParameterConfiguration {
                         Map<String, Object> jobParameters1 = chunkContext.getStepContext().getJobParameters();
 
 
-                        System.out.println("step1 was executed");
+                        System.out.println("parameterStep1 was executed");
                         return RepeatStatus.FINISHED;
                     }
                 })
                 .build();
     }
 
-    @Bean
-    public Step step2() {
-        return new StepBuilder("step2", jobRepository)
+//    @Bean
+    public Step parameterStep2() {
+        return new StepBuilder("parameterStep2", jobRepository)
                 .tasklet(new Tasklet() {
                     @Override
                     public @Nullable RepeatStatus execute(StepContribution contribution, ChunkContext chunkContext) throws Exception {
-                        System.out.println("step2 was executed");
+                        System.out.println("parameterStep2 was executed");
                         return RepeatStatus.FINISHED;
                     }
                 })
