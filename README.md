@@ -109,6 +109,33 @@ Job이 구동되면 Step을 실행하고 Step이 구동되면 Tasklet을 실행�
 <img width="1082" height="575" alt="스크린샷 2025-12-22 오후 9 54 00" src="https://github.com/user-attachments/assets/d2f4c20f-4e71-4cf4-aeeb-9ce21a50d424" />
 
 
+##  
+
+### JobExecution  
+
+- JobIstance 에 대한 한번의 시도를 의미하는 객체로서 Job 실행 중에 발생한 정보들을 저장하고 있는 객체
+  - 시작시간, 종료시간 ,상태(시작됨,완료,실패),종료상태의 속성을 가짐
+- JobIstance 과의 관계
+  - JobExecution은 'FAILED' 또는 'COMPLETED‘ 등의 Job의 실행 결과 상태를 가지고 있음
+  - JobExecution 의 실행 상태 결과가 'COMPLETED’ 면 JobInstance 실행이 완료된 것으로 간주해서 재 실행이 불가함
+  - JobExecution 의 실행 상태 결과가 'FAILED’ 면 JobInstance 실행이 완료되지 않은 것으로 간주해서 재실행이 가능함
+    - JobParameter 가 동일한 값으로 Job 을 실행할지라도 JobInstance 를 계속 실행할 수 있음
+  - JobExecution 의 실행 상태 결과가 'COMPLETED’ 될 때까지 하나의 JobInstance 내에서 여러 번의 시도가 생길 수 있음
+
+(BATCH_JOB_EXECUTION 테이블과 매핑)  
+-  JobInstance 와 JobExecution 는 1:M 의 관계로서 JobInstance 에 대한 성공/실패의 내역을 가지고 있음
+
+<img width="1175" height="613" alt="스크린샷 2025-12-23 오후 12 37 23" src="https://github.com/user-attachments/assets/330b352c-1845-4e71-891c-c7af158fbb66" />  
+
+##  
+
+<img width="1251" height="625" alt="스크린샷 2025-12-23 오후 12 37 36" src="https://github.com/user-attachments/assets/421b1c3b-f0e9-4415-b44b-c6b9b77ba901" />  
+
+##  
+
+<img width="1244" height="654" alt="스크린샷 2025-12-23 오후 12 37 46" src="https://github.com/user-attachments/assets/68944c79-41cb-4b60-bc4c-5e93028ee907" />
+
+
 
 
 
