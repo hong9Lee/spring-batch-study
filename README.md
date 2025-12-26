@@ -135,6 +135,31 @@ Job이 구동되면 Step을 실행하고 Step이 구동되면 Tasklet을 실행�
 
 <img width="1244" height="654" alt="스크린샷 2025-12-23 오후 12 37 46" src="https://github.com/user-attachments/assets/68944c79-41cb-4b60-bc4c-5e93028ee907" />
 
+##  
+
+### Step  
+- Batch job을 구성하는 독립적인 하나의 단계로서 실제 배치 처리를 정의하고 컨트롤하는 데 필요한 모든 정보를 가지고 있는 도메인 객체
+- 단순한 단일 태스크 뿐 아니라 입력과 처리 그리고 출력과 관련된 복잡한 비즈니스 로직을 포함하는 모든 설정들을 담고 있다.
+- 배치작업을 어떻게 구성하고 실행할 것인지 Job 의 세부 작업을 Task 기반으로 설정하고 명세해 놓은 객체
+- 모든 Job은 하나 이상의 step으로 구성됨
+
+TaskletStep
+- 가장 기본이 되는 클래스로서 Tasklet 타입의 구현체들을 제어한다
+PartitionStep
+- 멀티 스레드 방식으로 Step 을 여러 개로 분리해서 실행한다
+JobStep
+- Step 내에서 Job 을 실행하도록 한다
+FlowStep
+- Step 내에서 Flow 를 실행하도록 한다
+<img width="1124" height="597" alt="스크린샷 2025-12-23 오후 12 43 02" src="https://github.com/user-attachments/assets/a52d9276-0a4a-44ab-95cd-3786d32a0457" />
+
+##  
+
+<img width="1180" height="451" alt="스크린샷 2025-12-23 오후 12 43 20" src="https://github.com/user-attachments/assets/681306ea-3d01-47bc-a0b7-651dabe986e5" />  
+
+
+##  
+
 
 
 
