@@ -160,6 +160,33 @@ FlowStep
 
 ##  
 
+### StepExecution  
+- Step 에 대한 한번의 시도를 의미하는 객체로서 Step 실행 중에 발생한 정보들을 저장하고 있는 객체
+  - 시작시간, 종료시간 ,상태(시작됨,완료,실패), commit count, rollback count 등의 속성을 가짐
+- Step 이 매번 시도될 때마다 생성되며 각 Step 별로 생성된다
+- Job 이 재시작 하더라도 이미 성공적으로 완료된 Step 은 재 실행되지 않고 실패한 Step 만 실행된다
+- 이전 단계 Step이 실패해서 현재 Step을 실행하지 않았다면 StepExecution을 생성하지 않는다. Step이 실제로 시작됐을 때만 StepExecution을 생성한다
+- JobExecution 과의 관계
+  - Step의 StepExecution 이 모두 정상적으로 완료 되어야 JobExecution이 정상적으로 완료된다.
+  - Step의 StepExecution 중 하나라도 실패하면 JobExecution 은 실패한다
+
+(BATCH_STEP_EXECUTION 테이블과 매핑)  
+- JobExecution 와 StepExecution 는 1:M 의 관계
+- 하나의 Job 에 여러 개의 Step 으로 구성했을 경우 각 StepExecution 은 하나의 JobExecution 을 부모로 가진다
+
+<img width="1247" height="637" alt="스크린샷 2025-12. 23 오후 5 49 56" src="https://github.com/user-attachments/assets/bc2aa541-045b-4668-9397-02f8dfab096c" /> 
+
+## 
+
+<img width="1198" height="648" alt="스크린샷 2025-12-23 오후 5 50 11" src="https://github.com/user-attachments/assets/c39f56cf-710c-4ccd-9002-02d14284bcf8" />  
+
+##  
+
+<img width="1244" height="631" alt="스크린샷 2025-12-23 오후 5 50 32" src="https://github.com/user-attachments/assets/04234c52-0c83-47e5-a33b-ac72ab26aab5" />
+
+
+
+
 
 
 
