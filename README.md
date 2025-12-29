@@ -186,6 +186,18 @@ FlowStep
 
 
 
+##  
+
+### StepContribution  
+- 청크 프로세스의 변경 사항을 버퍼링 한 후 StepExecution 상태를 업데이트하는 도메인 객체
+- 청크 커밋 직전에 StepExecution 의 apply 메서드를 호출하여 상태를 업데이트 함
+- ExitStatus 의 기본 종료코드 외 사용자 정의 종료코드를 생성해서 적용 할 수 있음
+
+<img width="1091" height="337" alt="스크린샷 2025-12-23 오후 6 13 57" src="https://github.com/user-attachments/assets/2e43ebdd-1678-4f3d-b0ee-3174f6f39fd6" />  
+
+##  
+
+<img width="1183" height="617" alt="스크린샷 2025-12-23 오후 6 14 10" src="https://github.com/user-attachments/assets/eb1e379d-450e-4fee-ba91-1ead827c1773" />
 
 
 
