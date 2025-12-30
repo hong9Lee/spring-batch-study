@@ -200,6 +200,65 @@ FlowStep
 <img width="1183" height="617" alt="스크린샷 2025-12-23 오후 6 14 10" src="https://github.com/user-attachments/assets/eb1e379d-450e-4fee-ba91-1ead827c1773" />
 
 
+##  
+
+### ExecutionContext  
+- 프레임워크에서 유지 및 관리하는 키/값으로 된 컬렉션으로 StepExecution 또는 JobExecution 객체의 상태(state)를 저장하는 공유 객체
+- DB 에 직렬화 한 값으로 저장됨 - { “key” : “value”}
+- 공유 범위
+  - Step 범위 – 각 Step 의 StepExecution 에 저장되며 Step 간 서로 공유 안됨
+  - Job 범위 – 각 Job의 JobExecution 에 저장되며 Job 간 서로 공유 안되며 해당 Job의 Step 간 서로 공유됨
+  - Job 재 시작시 이미 처리한 Row 데이터는 건너뛰고 이후로 수행하도록 할 때 상태 정보를 활용한다
+
+<img width="713" height="156" alt="스크린샷 2025-12-23 오후 6 30 01" src="https://github.com/user-attachments/assets/d8e98aea-4d6b-4234-a354-84d2c52acaa6" />  
+
+##  
+
+<img width="1186" height="591" alt="스크린샷 2025-12-23 오후 6 30 13" src="https://github.com/user-attachments/assets/ed7f5a9e-c614-463a-84af-3b504c03851c" />  
+
+##  
+
+<img width="1047" height="630" alt="스크린샷 2025-12-23 오후 6 30 28" src="https://github.com/user-attachments/assets/d9164d84-aa21-4193-81f1-2e02901648d2" />  
+
+
+
+##  
+
+### JobRepository  
+- 배치 작업 중의 정보를 저장하는 저장소 역할
+- Job이 언제 수행되었고, 언제 끝났으며, 몇 번이 실행되었고 실행에 대한 결과 등의 배치 작업의 수행과 관련된 모든 meta data 를 저장함
+  - JobLauncher, Job, Step 구현체 내부에서 CRUD 기능을 처리함
+
+<img width="962" height="493" alt="스크린샷 2025-12-23 오후 6 48 26" src="https://github.com/user-attachments/assets/b511bcf4-2369-451d-926c-d31e8a51b335" />
+
+##  
+(JobRepository 설정)  
+- @EnableBatchProcessing 어노테이션만 선언하면 JobRepository 가 자동으로 빈으로 생성됨
+- BatchConfigurer 인터페이스를 구현하거나 BasicBatchConfigurer 를 상속해서 JobRepository 설정을 커스터마이징 할 수 있다
+
+
+##  
+
+### JobLauncher  
+- 배치 Job 을 실행시키는 역할을 한다
+- Job과 Job Parameters를 인자로 받으며 요청된 배치 작업을 수행한 후 최종 client 에게 JobExecution을 반환함
+- 스프링 부트 배치가 구동이 되면 JobLauncher 빈이 자동 생성 된다
+
+(Job 실행)  
+- JobLanucher.run(Job, JobParameters)
+- 스프링 부트 배치에서는 JobLauncherApplicationRunner 가 자동적으로 JobLauncher 을 실행시킨다
+- 동기적 실행
+  - taskExecutor 를 SyncTaskExecutor 로 설정할 경우 (기본값은 SyncTaskExecutor)
+  - JobExecution 을 획득하고 배치 처리를 최종 완료한 이후 Client 에게 JobExecution 을 반환
+  - 스케줄러에 의한 배치처리에 적합 함 – 배치처리시간이 길어도 상관없는 경우
+- 비동기적 실행
+  - taskExecutor 가 SimpleAsyncTaskExecutor 로 설정할 경우
+  - JobExecution 을 획득한 후 Client 에게 바로 JobExecution 을 반환하고 배치처리를 완료한다
+  - HTTP 요청에 의한 배치처리에 적합함 – 배치처리 시간이 길 경우 응답이 늦어지지 않도록 함 
+<img width="963" height="625" alt="스크린샷 2025-12-23 오후 6 52 40" src="https://github.com/user-attachments/assets/d4476728-4b56-40fe-ad1a-c0e696232376" />
+
+
+
 
 
 
