@@ -259,6 +259,125 @@ FlowStep
 
 
 
+##  
+
+### JobBuilderFactory / JobBuilder 
+
+스프링 배치는 Job 과 Step 을 쉽게 생성 및 설정할 수 있도록 util 성격의 빌더 클래스들을 제공한다.  
+
+JobBuilderFactory 
+- JobBuilder 를 생성하는 팩토리 클래스로서 get(String name) 메서드 제공
+- jobBuilderFactory.get(“jobName")
+  - “jobName” 은 스프링 배치가 Job 을 실행시킬 때 참조하는 Job 의 이름
+
+
+JobBuilder  
+- Job 을 구성하는 설정 조건에 따라 두 개의 하위 빌더 클래스를 생성하고 실제 Job 생성을 위임한다
+- SimpleJobBuilder
+  - SimpleJob 을 생성하는 Builder 클래스
+  - Job 실행과 관련된 여러 설정 API 를 제공한다
+- FlowJobBuilder
+  - FlowJob 을 생성하는 Builder 클래스
+  - 내부적으로 FlowBuilder 를 반환함으로써 Flow 실행과 관련된 여러 설정 API 를 제공한다
+ 
+<img width="1243" height="556" alt="스크린샷 2025-12-30 오후 8 30 12" src="https://github.com/user-attachments/assets/c99b5eda-cf68-470d-87bd-f45cc203478f" />  
+
+##  
+
+<img width="1226" height="598" alt="스크린샷 2025-12-30 오후 8 30 27" src="https://github.com/user-attachments/assets/5e1a6846-2485-488a-b4f6-c741c6924675" />
+
+##  
+
+### SimpleJob  
+
+- SimpleJob 은 Step 을 실행시키는 Job 구현체로서 SimpleJobBuilder 에 의해 생성된다
+- 여러 단계의 Step 으로 구성할 수 있으며 Step 을 순차적으로 실행시킨다
+- 모든 Step 의 실행이 성공적으로 완료되어야 Job 이 성공적으로 완료 된다
+- 맨 마지막에 실행한 Step 의 BatchStatus 가 Job 의 최종 BatchStatus가 된다
+- 
+<img width="1224" height="378" alt="스크린샷 2025-12-30 오후 8 34 31" src="https://github.com/user-attachments/assets/a308cbe1-ea24-450e-8efb-29b610eaea5b" />
+
+##  
+
+<img width="1198" height="549" alt="스크린샷 2025-12-30 오후 8 34 48" src="https://github.com/user-attachments/assets/1cbc541c-800f-41b7-868f-2f2e2499a247" />  
+
+##  
+
+<img width="1259" height="586" alt="스크린샷 2025-12-30 오후 8 35 06" src="https://github.com/user-attachments/assets/4905c6c9-5f82-46f6-9ac4-27c7bfc4487c" />  
+
+
+
+##  
+
+### start() / next()  
+
+<img width="961" height="505" alt="스크린샷 2025-12-30 오후 8 35 40" src="https://github.com/user-attachments/assets/ddb58272-419a-47f9-bf01-0362a0001215" />  
+
+##  
+
+<img width="1156" height="641" alt="스크린샷 2025-12-30 오후 8 35 49" src="https://github.com/user-attachments/assets/4d56fc95-661b-409e-8ab6-c6ee75553e33" />  
+
+##  
+
+### validator()  
+
+- Job 실행에 꼭 필요한 파라미터를 검증하는 용도
+- DefaultJobParametersValidator 구현체를 지원하며, 좀 더 복잡한 제약 조건이 있다면 인터페이스를 직접 구현할 수도 있음
+<img width="928" height="141" alt="스크린샷 2025-12-30 오후 8 36 28" src="https://github.com/user-attachments/assets/20430678-2c3a-4711-b1a5-aa31346f662d" />
+
+##  
+
+<img width="1179" height="449" alt="스크린샷 2025-12-30 오후 8 36 44" src="https://github.com/user-attachments/assets/c492d4fc-d38d-4954-8bb3-98b54899bfbd" />  
+
+##  
+
+### preventRestart()  
+- Job 의 재 시작 여부를 설정
+- 기본 값은 true 이며 false 로 설정 시 “ 이 Job은 재 시작을 지원하지 않는다 ” 라는 의미
+- Job 이 실패해도 재 시작이 안되며 Job을 재 시작하려고 하면 JobRestartException이 발생
+- 재 시작과 관련 있는 기능으로 Job 을 처음 실행하는 것 과는 아무런 상관 없음
+<img width="945" height="361" alt="스크린샷 2025-12-30 오후 8 37 23" src="https://github.com/user-attachments/assets/9b44f6b8-d8eb-41e8-82e2-31f85b605e6d" />
+
+##  
+
+### incrementer()  
+- JobParameters 에서 필요한 값을 증가시켜 다음에 사용될 JobParameters 오브젝트를 리턴
+- 기존의 JobParameter 변경없이 Job 을 여러 번 시작하고자 할때
+- RunIdIncrementer 구현체를 지원하며 인터페이스를 직접 구현할 수 있음
+
+##  
+
+### SimpleJob 아키텍처  
+
+<img width="1227" height="550" alt="스크린샷 2025-12-30 오후 8 38 37" src="https://github.com/user-attachments/assets/06bb2de0-c9ac-424c-95bb-f53c15e00d4a" />  
+
+##  
+
+<img width="943" height="468" alt="스크린샷 2025-12-30 오후 8 38 44" src="https://github.com/user-attachments/assets/097ff7e2-3ef4-4d9f-93c7-2a8f27b4996b" />  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
